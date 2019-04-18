@@ -1,0 +1,1 @@
+cmd_/home/ohm/cs483/pex2/cs483driver/cs483driver.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/ohm/cs483/pex2/cs483driver/cs483driver.ko /home/ohm/cs483/pex2/cs483driver/cs483driver.o /home/ohm/cs483/pex2/cs483driver/cs483driver.mod.o ;  true
