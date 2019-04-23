@@ -23,18 +23,18 @@ int main(){
 		return errno;
 	}
 
-	char str[BUFFER_LENGTH];
+	char str[BUFFER_LENGTH] = "";
 	printf("Type in a short string to send to the kernel module: ");
 	fgets(str, BUFFER_LENGTH, stdin);
 
 	printf("Writing to the device...\n");
-	ret = write(fd, str, 256);
+	ret = write(fd, str, BUFFER_LENGTH);
 	if (ret < 0){
 		perror("Failed to write message to the device.");
 		return errno;
 	}
 
-	char receive[BUFFER_LENGTH];
+	char receive[BUFFER_LENGTH] = "";
 	printf("Reading from the device...\n");
 	ret = read(fd, receive, BUFFER_LENGTH);
 	if (ret < 0){
