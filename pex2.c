@@ -3,12 +3,11 @@
  * how to use the write command.
  */
 
-
-
 #include <stdio.h>
 #include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
+#include <string.h>
 #define BUFFER_LENGTH 256
 
 int main(){
@@ -26,17 +25,35 @@ int main(){
 		return errno;
 	}
 
-	//initializes str variable
-	char str[BUFFER_LENGTH] = "";
-	
-	//prompts user for input
-	printf("Type in a short string to send to the kernel module: ");
+	int validInput = 0;
+    	char str[500] = "";
 
-	//gets string of 256 characters
-	fgets(str, BUFFER_LENGTH, stdin);
+
+	//ensures input is within 256 characters
+	while (validInput == 0){
+		//initializes str variable;
+		strcpy(str, "");
+
+		//prompts user for input
+		printf("Type in a short string to send to the kernel module: ");
+
+		//gets string of 500 characters
+		fgets(str, 500, stdin);
+
+		if (strlen(str) >= 256){
+			printf("%s", "Invalid Input. Input a message of 256 characters or less.\n");
+
+		}
+		else{
+			validInput = 1;
+		}
+
+	}
+
 
 	//writes input to device
-	printf("Writing to the device...\n");
+	printf("%s", "Writing to the device this message: ");
+	printf("%s", str);
 	ret = write(fd, str, BUFFER_LENGTH);
 
 	//error checking
@@ -58,9 +75,11 @@ int main(){
 		return errno;
 	}
 	else{
-		printf("String read from the device: ");
+		printf("The received message is: ");
 		printf("%s", receive);
 	}
+
+	printf("%s", "End of the program\n");
 
 	//closes the device
 	close(fd);
